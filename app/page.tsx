@@ -5,6 +5,8 @@ import Image from "next/image";
 import {
   Inbox,
   SlidersHorizontal,
+  ChevronLeft,
+  ChevronRight,
   ListOrdered,
   PanelRight,
   Globe2,
@@ -35,6 +37,7 @@ const controls = [
 
 export default function InboxPage() {
   const [filters, setFilters] = useState<Filters>(CLEAR);
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const [selection, select] = useState<string | null>(ranked[0]?.id ?? null);
   const storage = useReviewStorage();
   const merged = mergeRows(ranked, storage.overrides);
@@ -106,9 +109,12 @@ export default function InboxPage() {
           </div>
         </div>
         <div className="toolbar">
-          <span className="filter-title">
+          <button type="button" className="filter-title" aria-expanded={filtersOpen}
+            aria-controls="filter-options" onClick={() => setFiltersOpen(open => !open)}>
             <SlidersHorizontal size={17} /> Filters
-          </span>
+            {filtersOpen ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
+          </button>
+          <div id="filter-options" hidden={!filtersOpen}>
           {controls.map(({ key, label }) => (
             <label
               className="filter"
@@ -133,6 +139,7 @@ export default function InboxPage() {
               Clear filters
             </button>
           )}
+          </div>
         </div>
         <div className="workspace">
           <section className="card">

@@ -22,7 +22,7 @@ Open http://127.0.0.1:3000. On Windows systems with PowerShell script execution 
 ## Interview walkthrough
 
 1. Open a fresh browser profile on the local URL. The three filters start off. The inbox opens on `op_35`, ranked first by its supplied score of 94.
-2. Open the second row, `op_01` (aioseo.com, DR 14). Turn on the rating filter. The row and its details disappear. Choose **Clear filters** to restore 50 rows. The selection stays cleared until you choose another row.
+2. Open the second row, `op_01` (aioseo.com, DR 14). Expand **Filters** and turn on the rating filter. The row and its details disappear. Choose **Clear filters** to restore 50 rows. The selection stays cleared until you choose another row.
 3. Enable all three filters. The list reads **41 visible** and the global counter reads **50 to review**. Open `op_35`, change the draft and select **Approved**. The global counter becomes **49**.
 4. Visit another row, reload, and reopen both rows. Their drafts and statuses stay separate. Return `op_35` to **To review** to restore **50**. Erase the draft and reload. The editor stays empty.
 

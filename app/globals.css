@@ -115,6 +115,7 @@ h1 {
   gap: 9px;
 }
 .filter-title {
+  min-height: 34px;
   font-size: 14px;
   font-weight: 600;
   margin-right: 6px;
@@ -149,7 +150,8 @@ h1 {
   background: #aa3f18;
   color: white;
 }
-.filter:focus-within,
+#filter-options:not([hidden]) { display: contents; }
+.filter:has(input:focus-visible),
 button:focus-visible,
 textarea:focus-visible,
 select:focus-visible {

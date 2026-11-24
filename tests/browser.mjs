@@ -44,7 +44,16 @@ try {
     .getByText(original.competitorLinked, { exact: true })
     .last()
     .waitFor();
+  const toggle = page.getByRole("button", {name: "Filters", exact: true});
+  assert.equal(await rating.isVisible(), false);
+  await toggle.click();
   await rating.check();
+  assert.equal(await rating.evaluate(input => getComputedStyle(input.parentElement).outlineStyle), "none");
+  await toggle.click();
+  assert.equal(await rating.isVisible(), false);
+  await toggle.focus();
+  await page.keyboard.press("Enter");
+  assert.equal(await rating.isChecked(), true);
   assert.equal(await page.locator('[data-row="op_01"]').count(), 0);
   assert.equal(await draft.count(), 0);
   await page.getByRole("button", { name: "Clear filters" }).first().click();
