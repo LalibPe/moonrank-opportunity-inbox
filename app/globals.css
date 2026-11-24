@@ -159,8 +159,19 @@ select:focus-visible {
 .clear,
 .empty button {
   font-size: 14px;
-  text-decoration: underline;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 6px 11px;
+  background: white;
   color: var(--accent-ink);
+}
+.clear { margin-inline-start: 8px; }
+@media (hover: hover) {
+  .filter:hover, .clear:hover, .empty button:hover {
+    background: #fff6f1;
+    border-color: #d8b9aa;
+  }
+  .filter:has(:checked):hover { background: #ffe9de; }
 }
 .workspace {
   display: grid;
@@ -434,7 +445,7 @@ textarea {
   .overview, .card { animation: rise-in 400ms ease-out backwards; }
   .inspector { animation-delay: 70ms; }
   .details { animation: rise-in 180ms ease-out; }
-  .result, .filter { transition: background-color 160ms, border-color 160ms; }
+  .result, .filter, .clear { transition: background-color 160ms, border-color 160ms; }
   .overview::before { animation: orbit-in 950ms ease-out both; }
   @keyframes rise-in { from { opacity: 0; transform: translateY(6px); } }
   @keyframes orbit-in { from { opacity: 0; transform: translateX(15px) rotate(29deg); } }

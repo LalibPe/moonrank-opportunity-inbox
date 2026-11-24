@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 import {
   Inbox,
@@ -40,7 +40,36 @@ export default function InboxPage() {
   const merged = mergeRows(ranked, storage.overrides);
   const visible = filterRows(merged, filters);
   const row = visible.find((item) => item.id === selection);
+  const list = useRef<HTMLDivElement>(null);
+  const previousTops = useRef<Map<string, number> | null>(null);
+
+  useLayoutEffect(() => {
+    const before = previousTops.current;
+    previousTops.current = null;
+    if (!before || !list.current) return;
+
+    const buttons = list.current.querySelectorAll<HTMLButtonElement>("[data-row]");
+    // Read every destination before starting any transforms.
+    const moves = Array.from(buttons, button => {
+      button.getAnimations().forEach(animation => animation.cancel());
+      const oldTop = before.get(button.dataset.row!);
+      return { button, shift: oldTop === undefined ? 8 : oldTop - button.getBoundingClientRect().top, entering: oldTop === undefined };
+    });
+    for (const { button, shift, entering } of moves) {
+      button.animate([
+        { transform: `translateY(${shift}px)`, opacity: entering ? 0 : 0.84 },
+        { transform: "translateY(0)", opacity: 1 },
+      ], { duration: 260, easing: "cubic-bezier(.22,.7,.25,1)" });
+    }
+  }, [filters]);
+
   function changeFilters(next: Filters) {
+    if (list.current && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      previousTops.current = new Map(Array.from(
+        list.current.querySelectorAll<HTMLButtonElement>("[data-row]"),
+        button => [button.dataset.row!, button.getBoundingClientRect().top],
+      ));
+    }
     if (!filterRows(ranked, next).some((item) => item.id === selection))
       select(null);
     setFilters(next);
@@ -120,7 +149,7 @@ export default function InboxPage() {
               <span>OPPORTUNITY</span>
               <span>SCORE</span>
             </div>
-            <div className="results">
+            <div className="results" ref={list}>
               {visible.map((item) => (
                 <button
                   key={item.id}
