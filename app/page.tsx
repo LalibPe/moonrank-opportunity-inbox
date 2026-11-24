@@ -5,7 +5,6 @@ import Image from "next/image";
 import {
   Inbox,
   SlidersHorizontal,
-  ChevronLeft,
   ChevronRight,
   ListOrdered,
   PanelRight,
@@ -112,9 +111,10 @@ export default function InboxPage() {
           <button type="button" className="filter-title" aria-expanded={filtersOpen}
             aria-controls="filter-options" onClick={() => setFiltersOpen(open => !open)}>
             <SlidersHorizontal size={17} /> Filters
-            {filtersOpen ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
+            <ChevronRight size={16} className="filter-chevron" />
           </button>
-          <div id="filter-options" hidden={!filtersOpen}>
+          <div id="filter-options" inert={!filtersOpen}>
+            <div className="filter-clip"><div className="filter-items">
           {controls.map(({ key, label }) => (
             <label
               className="filter"
@@ -139,6 +139,7 @@ export default function InboxPage() {
               Clear filters
             </button>
           )}
+            </div></div>
           </div>
         </div>
         <div className="workspace">

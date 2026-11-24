@@ -50,6 +50,7 @@ try {
   await rating.check();
   assert.equal(await rating.evaluate(input => getComputedStyle(input.parentElement).outlineStyle), "none");
   await toggle.click();
+  await rating.waitFor({ state: "hidden" });
   assert.equal(await rating.isVisible(), false);
   await toggle.focus();
   await page.keyboard.press("Enter");

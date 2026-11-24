@@ -150,7 +150,31 @@ h1 {
   background: #aa3f18;
   color: white;
 }
-#filter-options:not([hidden]) { display: contents; }
+#filter-options {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+#filter-options[inert] {
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateX(-6px);
+}
+.filter-clip { min-height: 0; overflow: hidden; }
+.filter-items { display: flex; flex-wrap: wrap; gap: 8px; padding: 4px; }
+.filter-title[aria-expanded="true"] .filter-chevron { transform: rotate(180deg); }
+@media (prefers-reduced-motion: no-preference) {
+  #filter-options {
+    transition: grid-template-rows 200ms ease, opacity 170ms ease, transform 200ms ease;
+  }
+  #filter-options[inert] {
+    transition: grid-template-rows 200ms ease, opacity 170ms ease, transform 200ms ease, visibility 0s 200ms;
+  }
+  .filter-chevron { transition: transform 200ms ease; }
+}
 .filter:has(input:focus-visible),
 button:focus-visible,
 textarea:focus-visible,
