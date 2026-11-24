@@ -44,6 +44,8 @@ Edit **`MIN_DOMAIN_RATING` in [lib/rules.ts](lib/rules.ts)**. Both the checkbox 
 
 Codex implemented the app and tests, ran the fixture checks, and exercised the inbox with Playwright in clean Chrome. The browser checks cover missing contacts, row-specific details, filter-driven deselection, draft isolation, the four statuses, counters, and persistence across reloads. The rule tests cover ID uniqueness, sort ties, all filters together, blank and null names, and the exact rating boundary. The original and workspace fixture had the same SHA-256 digest.
 
+On 24 November 2026, Codex cloned the public repository into a new directory on Windows and followed the commands above with Node 25.8.2 and npm 11.11.1. The locked install, unit tests, lint, production build, and production start succeeded. The full browser walkthrough passed against that production server in a fresh Chrome context. It recorded zero off-origin requests and zero page errors. The cloned fixture matched the original byte for byte.
+
 These checks were performed by Codex. The candidate's own manual interview rehearsal is separate.
 
 ## Scope and next day
